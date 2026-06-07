@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="ioService" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg>
+            <value type="java.lang.Class">ru.otus.hw.service.IOService</value>
+        </constructor-arg>
+    </bean>
+
+    <bean id="questionDao" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg>
+            <value type="java.lang.Class">ru.otus.hw.dao.QuestionDao</value>
+        </constructor-arg>
+    </bean>
+
+    <bean id="testService" class="ru.otus.hw.service.TestServiceImpl">
+        <constructor-arg index="0" ref="ioService"/>
+        <constructor-arg index="1" ref="questionDao"/>
+    </bean>
+
+</beans>
