@@ -1,0 +1,10 @@
+# Добавить сюда своих вопросов. Эту строку надо пропустить при настройке CsvToBean (withSkipLines)
+Есть ли жизнь на Марсе?;Это науке пока не известно%true|Конечно. Красные (НЛО) это с Марса. А зеленые (НЛО) с Венеры%false|Точно нет%false
+Как нужно загружать ресурс из jar в Java?;ClassLoader#geResourceAsStream или ClassPathResource#getInputStream%true|ClassLoader#geResource#getFile + FileReader%false|Wingardium Leviosa%false
+Какой предпочтительный способ реакции на исключения?;@SneakyThrow%false|e.printStackTrace()%false|Проброс дальше с предварительным оборачиванием в бизнес-исключение (например, QuestionReadException)%true|Игнорирование исключения%false
+Какое ключевое слово используется для создания объекта в Java?;new%true|create%false|object%false|make%false
+Какая коллекция не разрешает дублирующие элементы?;Set%true|List%false|ArrayList%false|Queue%false
+Какое значение по умолчанию поля типа boolean в Java?;false%true|true%false|null%false|0%false
+Какой метод является точкой входа в Java-приложение?;main%true|start%false|run%false|init%false
+Зачем в Java нужна конструкция try-with-resources?;Чтобы автоматически закрывать ресурсы%true|Чтобы запускать код параллельно%false|Чтобы создавать новый поток%false|Чтобы не обрабатывать исключения%false
+Что получится при вычислении 5 / 2 в Java, если оба значения имеют тип int?;2%true|2.5%false|3%false|2.0%false

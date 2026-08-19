@@ -1,0 +1,26 @@
+${AnsiColor.GREEN}
+⠀           . --- .
+            /        \
+           |  O  _  O |
+           |  ./   \. |
+           /  `-._.-'  \
+         .' /         \ `.
+     .-~.-~/           \~-.~-.
+ .-~ ~    |             |    ~ ~-.
+ `- .     |             |     . -'
+      ~ - |             | - ~
+          \             /
+        ___\           /___
+        ~;_  >- . . -<  _i~
+           `'         `'
+${AnsiColor.CYAN}Application : ${spring.application.name}
+${AnsiColor.CYAN}Version     : ${application.version:dev}
+${AnsiColor.CYAN}Profile     : ${spring.profiles.active:default}
+${AnsiColor.CYAN}Java        : ${java.version}
+${AnsiColor.CYAN}Spring Boot : ${spring-boot.version}
+${AnsiColor.CYAN}PID         : ${PID}
+${AnsiColor.CYAN}Locale      : ${test.locale}
+${AnsiColor.YELLOW}--------------------------------------------------------
+${AnsiColor.GREEN}✓ Service is starting...
+${AnsiColor.YELLOW}--------------------------------------------------------
+${AnsiColor.DEFAULT}
