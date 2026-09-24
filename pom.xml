@@ -15,5 +15,6 @@
         <module>hw02-annotation-config</module>
         <module>hw03-spring-boot</module>
         <module>hw05-jdbc-hard</module>
+        <module>hw06-jpa</module>
     </modules>
 </project>
