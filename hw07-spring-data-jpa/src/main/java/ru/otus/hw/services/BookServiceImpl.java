@@ -1,7 +1,6 @@
 package ru.otus.hw.services;
 
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.hw.exceptions.EntityNotFoundException;
@@ -31,15 +30,13 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(readOnly = true)
     public Optional<Book> findById(long id) {
-        return bookRepository.findById(id).map(this::initializeGenres);
+        return bookRepository.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Book> findAll() {
-        var books = bookRepository.findAllByOrderByIdAsc();
-        books.forEach(this::initializeGenres);
-        return books;
+        return bookRepository.findAllByOrderByIdAsc();
     }
 
     @Override
@@ -71,11 +68,6 @@ public class BookServiceImpl implements BookService {
         bookRepository.deleteById(id);
     }
 
-    private Book initializeGenres(Book book) {
-        Hibernate.initialize(book.getGenres());
-        return book;
-    }
-
     private Author requireAuthor(long authorId) {
         return authorRepository.findById(authorId)
                 .orElseThrow(() -> new EntityNotFoundException("Author with id %d not found".formatted(authorId)));
@@ -85,7 +77,7 @@ public class BookServiceImpl implements BookService {
         if (isEmpty(genreIds)) {
             throw new IllegalArgumentException("At least one genre is required");
         }
-        var genres = genreRepository.findByIdInOrderByIdAsc(genreIds);
+        var genres = genreRepository.findAllById(genreIds);
         var missingIds = new TreeSet<>(genreIds);
         genres.forEach(genre -> missingIds.remove(genre.getId()));
         if (!missingIds.isEmpty()) {

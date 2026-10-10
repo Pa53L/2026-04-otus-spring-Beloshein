@@ -54,25 +54,27 @@ class JpaFetchPlanTest {
         statistics().setStatisticsEnabled(false);
     }
 
-    @DisplayName("Должен загружать каталог двумя запросами независимо от числа книг")
+    @DisplayName("Должен загружать каталог одним запросом независимо от числа книг")
     @ParameterizedTest
     @ValueSource(ints = {1, 50})
-    void shouldReadCatalogWithTwoQueriesRegardlessOfSize(int extraBooks) {
+    void shouldReadCatalogWithOneQueryRegardlessOfSize(int extraBooks) {
         for (int i = 0; i < extraBooks; i++) {
             createBook(i);
         }
         startCountingQueries();
 
         var catalog = books.findAll();
+
         assertThat(catalog).hasSize(3 + extraBooks);
         assertThat(catalog).extracting(Book::getId).doesNotHaveDuplicates();
         catalog.forEach(this::assertCatalogLoaded);
-        assertThat(statistics().getPrepareStatementCount()).isEqualTo(2);
+        assertThat(statistics().getPrepareStatementCount()).isEqualTo(1L);
 
         em.clear();
+
         catalog.forEach(book -> assertThat(bookConverter.bookToString(book))
                 .contains(book.getTitle(), book.getAuthor().getFullName(), book.getGenres().get(0).getName()));
-        assertThat(statistics().getPrepareStatementCount()).isEqualTo(2);
+        assertThat(statistics().getPrepareStatementCount()).isEqualTo(1L);
     }
 
     @DisplayName("Должен загружать комментарии одним запросом независимо от их числа")

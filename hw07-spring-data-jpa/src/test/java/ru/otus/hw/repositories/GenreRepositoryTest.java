@@ -27,7 +27,7 @@ class GenreRepositoryTest {
     @DisplayName("Должен выбирать только существующие жанры из указанных id")
     @Test
     void shouldSelectOnlyExistingRequestedGenres() {
-        assertThat(repository.findByIdInOrderByIdAsc(Set.of(5L, 1L, 999L))).extracting(Genre::getId)
-                .containsExactly(1L, 5L);
+        assertThat(repository.findAllById(Set.of(5L, 1L, 999L))).extracting(Genre::getId)
+                .containsExactlyInAnyOrder(1L, 5L);
     }
 }
