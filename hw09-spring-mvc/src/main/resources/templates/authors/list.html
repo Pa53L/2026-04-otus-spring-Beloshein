@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Авторы</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}" />
+    </head>
+    <body>
+        <nav aria-label="Навигация">
+            <a th:href="@{/books}">Книги</a>
+            <a th:href="@{/authors}">Авторы</a>
+            <a th:href="@{/genres}">Жанры</a>
+        </nav>
+
+        <main>
+            <h1>Авторы</h1>
+
+            <p class="empty-state" th:if="${#lists.isEmpty(authors)}">
+                Авторы не добавлены.
+            </p>
+
+            <div class="table-wrap" th:unless="${#lists.isEmpty(authors)}">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Имя автора</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="author : ${authors}">
+                            <td th:text="${author.fullName}">Имя автора</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </body>
+</html>

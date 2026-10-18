@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Редактирование книги</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}" />
+    </head>
+    <body>
+        <nav aria-label="Навигация">
+            <a th:href="@{/books}">Книги</a>
+            <a th:href="@{/authors}">Авторы</a>
+            <a th:href="@{/genres}">Жанры</a>
+        </nav>
+
+        <main>
+            <h1>Редактирование книги</h1>
+
+            <form
+                class="book-form"
+                th:action="@{/books/{id}(id=${bookId})}"
+                th:object="${bookForm}"
+                method="post"
+            >
+                <ul th:if="${#fields.hasGlobalErrors()}" role="alert">
+                    <li
+                        th:each="error : ${#fields.globalErrors()}"
+                        th:text="${error}"
+                    >
+                        Ошибка заполнения формы
+                    </li>
+                </ul>
+
+                <div class="form-field">
+                    <label for="title">Название</label>
+                    <input
+                        id="title"
+                        type="text"
+                        th:field="*{title}"
+                        required
+                        aria-describedby="title-errors"
+                    />
+
+                    <p
+                        id="title-errors"
+                        th:if="${#fields.hasErrors('title')}"
+                        th:errors="*{title}"
+                        role="alert"
+                    >
+                        Ошибка названия
+                    </p>
+                </div>
+
+                <div class="form-field">
+                    <label for="authorId">Автор</label>
+                    <select
+                        id="authorId"
+                        th:field="*{authorId}"
+                        required
+                        aria-describedby="author-errors"
+                    >
+                        <option value="">Выберите автора</option>
+
+                        <option
+                            th:each="author : ${authors}"
+                            th:value="${author.id}"
+                            th:text="${author.fullName}"
+                        >
+                            Имя автора
+                        </option>
+                    </select>
+
+                    <p
+                        id="author-errors"
+                        th:if="${#fields.hasErrors('authorId')}"
+                        th:errors="*{authorId}"
+                        role="alert"
+                    >
+                        Ошибка выбора автора
+                    </p>
+                </div>
+
+                <div class="form-field">
+                    <label for="genreIds">Жанры</label>
+                    <select
+                        id="genreIds"
+                        th:field="*{genreIds}"
+                        multiple
+                        size="6"
+                        required
+                        aria-describedby="genres-help genres-errors"
+                    >
+                        <option
+                            th:each="genre : ${genres}"
+                            th:value="${genre.id}"
+                            th:text="${genre.name}"
+                        >
+                            Название жанра
+                        </option>
+                    </select>
+
+                    <p id="genres-help">
+                        Выберите один или несколько жанров. Для выбора
+                        нескольких удерживайте Ctrl (Command на macOS).
+                    </p>
+
+                    <p
+                        id="genres-errors"
+                        th:if="${#fields.hasErrors('genreIds')}"
+                        th:errors="*{genreIds}"
+                        role="alert"
+                    >
+                        Ошибка выбора жанров
+                    </p>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit">Сохранить изменения</button>
+                    <a th:href="@{/books/{id}(id=${bookId})}">Отмена</a>
+                </div>
+            </form>
+
+            <hr />
+
+            <form th:action="@{/books/{id}/delete(id=${bookId})}" method="post">
+                <button class="button-danger" type="submit">
+                    Удалить книгу
+                </button>
+            </form>
+        </main>
+    </body>
+</html>

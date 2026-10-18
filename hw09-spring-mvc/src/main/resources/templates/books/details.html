@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title th:text="|${book.title} — Каталог книг|">Просмотр книги</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}" />
+    </head>
+    <body>
+        <nav aria-label="Навигация">
+            <a th:href="@{/books}">Книги</a>
+            <a th:href="@{/authors}">Авторы</a>
+            <a th:href="@{/genres}">Жанры</a>
+        </nav>
+
+        <main>
+            <a th:href="@{/books}">← К списку книг</a>
+
+            <article class="surface">
+                <h1 th:text="${book.title}">Название книги</h1>
+
+                <dl>
+                    <dt>Автор</dt>
+                    <dd th:text="${book.author.fullName}">Имя автора</dd>
+
+                    <dt>Жанры</dt>
+                    <dd>
+                        <ul class="genres">
+                            <li
+                                th:each="genre : ${book.genres}"
+                                th:text="${genre.name}"
+                            >
+                                Название жанра
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+
+                <div class="actions">
+                    <a th:href="@{/books/{id}/edit(id=${book.id})}">
+                        Редактировать
+                    </a>
+
+                    <form
+                        th:action="@{/books/{id}/delete(id=${book.id})}"
+                        method="post"
+                    >
+                        <button class="button-danger" type="submit">
+                            Удалить книгу
+                        </button>
+                    </form>
+                </div>
+            </article>
+
+            <section class="surface" aria-labelledby="comments-heading">
+                <h2 id="comments-heading">Комментарии</h2>
+
+                <p th:if="${#lists.isEmpty(comments)}">
+                    К этой книге пока нет комментариев.
+                </p>
+
+                <ul class="comments" th:unless="${#lists.isEmpty(comments)}">
+                    <li
+                        th:each="comment : ${comments}"
+                        th:text="${comment.text}"
+                    >
+                        Текст комментария
+                    </li>
+                </ul>
+            </section>
+        </main>
+    </body>
+</html>
